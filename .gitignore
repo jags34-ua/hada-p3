@@ -28,6 +28,21 @@ Thumbs.db
 *.log
 *.sql
 *.sqlite
+*.mdf
+*.ldf
 
 # Ignora los archivos de entorno
 .env
+
+# Ignora los archivos y directorios específicos de tu proyecto
+.vs/
+*.suo
+library/obj/
+proWeb/obj/
+proWeb/bin/
+proWeb/obj/Debug
+library/bin/
+.vs/ProjectSettings.json
+.vs/VSWorkspaceState.json
+proWeb/obj/Release/
+
