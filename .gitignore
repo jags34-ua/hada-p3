@@ -1,0 +1,33 @@
+# Ignora los archivos de configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignora los archivos de configuración del editor
+*.sublime*
+*.swp
+*.swo
+*.swn
+.idea/
+.vscode/
+
+# Ignora los archivos de construcción y paquetes
+*.o
+*.exe
+*.dll
+*.so
+*.dylib
+*.jar
+*.pyc
+*.class
+/target/
+/dist/
+/build/
+/node_modules/
+
+# Ignora los archivos de registro y bases de datos
+*.log
+*.sql
+*.sqlite
+
+# Ignora los archivos de entorno
+.env
