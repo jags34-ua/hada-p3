@@ -12,11 +12,12 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <h1>José Antonio García Sánchez - 29526264Z</h1>
+            José Antonio García Sánchez - 29526264Z
             <br />
-            <h1>Christian Ortiz Belmonte - 29526536X</h1>
-
-
+            Christian Ortiz Belmonte - 29526536X
+            <h1 style="background-color: cadetblue; padding:30px; text-align:center;">
+                HADA P3 - CURSO 2023/24
+            </h1>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
