@@ -113,7 +113,9 @@ namespace library
 
         public bool Read()
         {
-
+            CADProduct readProduct = new CADProduct();
+            bool confirm = readProduct.Read(this);
+            return confirm;
         }
 
         public bool ReadFirst()

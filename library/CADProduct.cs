@@ -29,7 +29,7 @@ namespace library
                 SqlConnection connect = null;
                 connect = new SqlConnection(constring);
                 connect.Open();
-
+                // Hay que cambiar el query?
                 string query = "Insert INTO Products (id, name, code, amount, price, category, creationDate) VALUES ('" + en.Code + "', '" + en.Name + "', '" + en.Code + "', '" + en.Amount + "', '" + en.Price + "', '" + en.Category + "', '" + en.CreationDate + "')";
                 SqlCommand consulta = new SqlCommand(query, connect);
                 consulta.ExecuteNonQuery();
@@ -39,12 +39,12 @@ namespace library
             catch(SqlException e)
             {
                 confirmation = false;
-                Console.WriteLine("User operation has failed.Error: {0}", e.Message);
+                Console.WriteLine("Create operation has failed.Error: {0}", e.Message);
             }
             catch(Exception ex)
             {
                 confirmation = false;
-                Console.WriteLine("User operation has failed.Error: {0}", ex.Message);
+                Console.WriteLine("Create operation has failed.Error: {0}", ex.Message);
             }
             return confirmation;
         }
@@ -57,7 +57,7 @@ namespace library
                 SqlConnection connect = null;
                 connect = new SqlConnection(constring);
                 connect.Open();
-
+                // Hay que cambiar el query.
                 string query = "Insert INTO Products (id, name, code, amount, price, category, creationDate) VALUES ('" + en.Code + "', '" + en.Name + "', '" + en.Code + "', '" + en.Amount + "', '" + en.Price + "', '" + en.Category + "', '" + en.CreationDate + "')";
                 SqlCommand consulta = new SqlCommand(query, connect);
                 consulta.ExecuteNonQuery();
@@ -67,12 +67,12 @@ namespace library
             catch (SqlException e)
             {
                 confirmation = false;
-                Console.WriteLine("User operation has failed.Error: {0}", e.Message);
+                Console.WriteLine("Update operation has failed.Error: {0}", e.Message);
             }
             catch (Exception ex)
             {
                 confirmation = false;
-                Console.WriteLine("User operation has failed.Error: {0}", ex.Message);
+                Console.WriteLine("Update operation has failed.Error: {0}", ex.Message);
             }
             return confirmation;
         }
@@ -84,7 +84,48 @@ namespace library
 
         public bool Read(ENProduct en)
         {
+            bool confirmation = false;
+            try
+            {
+                SqlConnection connect = null;
+                connect = new SqlConnection(constring);
+                connect.Open();
+                // Hay que cambiar el query.
+                string query = "Insert INTO Products (id, name, code, amount, price, category, creationDate) VALUES ('" + en.Code + "', '" + en.Name + "', '" + en.Code + "', '" + en.Amount + "', '" + en.Price + "', '" + en.Category + "', '" + en.CreationDate + "')";
+                SqlCommand consulta = new SqlCommand(query, connect);
+                SqlDataReader dr = consulta.ExecuteReader();
+                dr.Read();
+                
+                if(dr["code"].ToString() == en.Code)
+                {
+                    en.Code = dr["code"].ToString();
+                    en.Amount = int.Parse(dr["amount"].ToString());
+                    en.Price = float.Parse(dr["price"].ToString());
+                    en.CreationDate = DateTime.Parse(dr["creationDate"].ToString());
+                    en.Name = dr["name"].ToString();
+                    en.Category = int.Parse(dr["category"].ToString());
 
+                    confirmation = true;
+                }
+                else
+                {
+                    confirmation = false;
+                }
+
+                dr.Close();
+                connect.Close();
+            }
+            catch (SqlException e)
+            {
+                confirmation = false;
+                Console.WriteLine("Read operation has failed.Error: {0}", e.Message);
+            }
+            catch (Exception ex)
+            {
+                confirmation = false;
+                Console.WriteLine("Read operation has failed.Error: {0}", ex.Message);
+            }
+            return confirmation;
         }
 
         public bool ReadFirst(ENProduct en)

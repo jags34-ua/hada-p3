@@ -91,7 +91,7 @@ namespace proWeb
             }
             else
             {
-                msgToShow.Text = "Some of the fields have not been specified,please fill them before making an operation.";
+                msgToShow.Text = "Some of the fields have not been specified,please fill them before trying to insert a product.";
             }
         }
         protected void updateButton_Click(object sender, EventArgs e)
@@ -159,16 +159,41 @@ namespace proWeb
             }
             else
             {
-                msgToShow.Text = "Some of the fields have not been specified,please fill them before making an operation.";
+                msgToShow.Text = "Some of the fields have not been specified,please fill them before trying an update.";
             }
         }
         protected void deleteButton_Click(object sender, EventArgs e)
         {
 
         }
+
+
         protected void readButton_Click(object sender, EventArgs e)
         {
+            if(codeProduct.Text == "")
+            {
+                msgToShow.Text = "Insert a product code before trying to read the information.";
+            }
+            else
+            {
+                ENProduct readProduct = new ENProduct();
+                readProduct.Code = codeProduct.Text;
+                if (readProduct.Read())
+                {
+                    codeProduct.Text = readProduct.Code;
+                    nameProduct.Text = readProduct.Name;
+                    amountProduct.Text = readProduct.Amount.ToString();
+                    categoryListProduct.SelectedValue = readProduct.Category.ToString();
+                    priceProduct.Text = readProduct.Price.ToString();
+                    cdateProduct.Text = readProduct.CreationDate.ToString();
 
+                    msgToShow.Text = "Product with code: " + readProduct.Code + " correctly shown.";
+                }
+                else
+                {
+                    msgToShow.Text = "Product was not found in the data base.";
+                }
+            }
         }
         protected void readfirstButton_Click(object sender, EventArgs e)
         {
