@@ -52,22 +52,58 @@ namespace library
 
         public ENProduct()
         {
-
+            this.Name = "";
+            this.Code = "";
+            this.Amount = 0;
+            this.Price = 0;
+            this.Category = 0;
+            //this.CreationDate = 1 / 01 / 2000 00:00:00;
         }
 
         public ENProduct(string code,string name,int amount,float price,DateTime creationDate)
         {
-
+            this.Code = code;
+            this.Name = name;
+            this.Amount = amount;
+            this.Price = price;
+            this.CreationDate = creationDate;
         }
 
         public bool Create()
         {
+            bool confirmation = false;
+            CADProduct newCadProduct = new CADProduct();
+            if (!newCadProduct.Read(this))
+            {
+                confirmation = newCadProduct.Create(this);
+            }
+            return confirmation;
 
         }
 
         public bool Update()
         {
+            ENProduct pivote = new ENProduct();
+            CADProduct updateProduct = new CADProduct();
+            bool confirmation = false;
+            pivote.Code = this.Code;
+            pivote.Amount = this.Amount;
+            pivote.Category = this.Category;
+            pivote.CreationDate = this.CreationDate;
+            pivote.Price = this.Price;
+            pivote.Name = this.Name;
 
+            if (updateProduct.Read(this))
+            {
+                this.Code = pivote.Code;
+                this.Amount = pivote.Amount;
+                this.Category = pivote.Category;
+                this.CreationDate = pivote.CreationDate;
+                this.Price = pivote.Price;
+                this.Name = pivote.Name;
+                confirmation = updateProduct.Update(this);
+            }
+            return confirmation;
         }
 
         public bool Delete()
