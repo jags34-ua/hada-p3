@@ -5,8 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using library;
 using proWeb;
+using library;
 
 namespace proWeb
 {
@@ -18,7 +18,7 @@ namespace proWeb
             // Aquí hay que añadir lo que pone en la última diapositiva.
         }
 
-        protected void createButton_Click(object sender, EventArgs e)
+        protected void toCreate(object sender, EventArgs e)
         {
             if(codeProduct.Text != "" && nameProduct.Text != "" && amountProduct.Text != ""
                 && priceProduct.Text != "" && cdateProduct.Text != "")
@@ -75,9 +75,10 @@ namespace proWeb
                 ENProduct newProduct = new ENProduct();
                 newProduct.Code = codeProduct.Text;
                 newProduct.Name = nameProduct.Text;
+                Console.WriteLine(newProduct.Name);
                 newProduct.Price = float.Parse(priceProduct.Text);
                 newProduct.Amount = int.Parse(amountProduct.Text);
-                newProduct.Category = int.Parse(categoryListProduct.SelectedValue);
+                newProduct.Category = int.Parse(categoryListProduct.SelectedValue) + 1;
                 newProduct.CreationDate = DateTime.Parse(cdateProduct.Text);
 
                 if (newProduct.Create())
@@ -94,7 +95,7 @@ namespace proWeb
                 msgToShow.Text = "Some of the fields have not been specified,please fill them before trying to insert a product.";
             }
         }
-        protected void updateButton_Click(object sender, EventArgs e)
+        protected void toUpdate(object sender, EventArgs e)
         {
             if (codeProduct.Text != "" && nameProduct.Text != "" && amountProduct.Text != ""
                 && priceProduct.Text != "" && cdateProduct.Text != "")
@@ -162,13 +163,14 @@ namespace proWeb
                 msgToShow.Text = "Some of the fields have not been specified,please fill them before trying an update.";
             }
         }
-        protected void deleteButton_Click(object sender, EventArgs e)
+
+        protected void toDelete(object sender, EventArgs e)
         {
 
         }
 
 
-        protected void readButton_Click(object sender, EventArgs e)
+        protected void toRead(object sender, EventArgs e)
         {
             if(codeProduct.Text == "")
             {
@@ -183,7 +185,7 @@ namespace proWeb
                     codeProduct.Text = readProduct.Code;
                     nameProduct.Text = readProduct.Name;
                     amountProduct.Text = readProduct.Amount.ToString();
-                    categoryListProduct.SelectedValue = readProduct.Category.ToString();
+                    categoryListProduct.SelectedIndex = readProduct.Category - 1;
                     priceProduct.Text = readProduct.Price.ToString();
                     cdateProduct.Text = readProduct.CreationDate.ToString();
 
@@ -195,15 +197,15 @@ namespace proWeb
                 }
             }
         }
-        protected void readfirstButton_Click(object sender, EventArgs e)
+        protected void toReadFirst(object sender, EventArgs e)
         {
 
         }
-        protected void readprevButton_Click(object sender, EventArgs e)
+        protected void toReadPrev(object sender, EventArgs e)
         {
 
         }
-        protected void readnextButton_Click(object sender, EventArgs e)
+        protected void toReadNext(object sender, EventArgs e)
         {
 
         }

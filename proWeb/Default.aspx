@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="proWeb.WebForm1" %>
+﻿<%@ Page Title="Hada P3" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="proWeb.WebForm1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-    <asp:Label ID="title" runat="server" Text="Products Management" style="font-size: 140%; font-weight: bold;"></asp:Label>
+    <asp:Label ID="titleProducts" runat="server" Text="Products Management" style="font-size: 140%; font-weight: bold;"></asp:Label>
 
     <br /><br />
 
@@ -43,12 +43,12 @@
     <asp:Label ID="msgToShow" runat="server"></asp:Label>
     <br /><br />
 
-    <asp:Button text="Create" onClick="createButton_Click" ID="createButton" runat="server" />
-    <asp:Button text="Update" onClick="updateButton_Click" ID="updateButton" runat="server" />
-    <asp:Button text="Delete" onClick="deleteButton_Click" ID="deleteButton" runat="server" />
-    <asp:Button text="Read" onClick="readButton_Click" ID="readButton" runat="server"  />
-    <asp:Button text="Read First" onClick="readfirstButton_Click" ID="firstButton" runat="server" />
-    <asp:Button text="Read Prev" onClick="readprevButton_Click" ID="previousButton" runat="server" />
-    <asp:Button text="Read Next" onClick="readnextButton_Click" ID="nextButton" runat="server" />
+    <asp:Button text="Create" onClick="toCreate" ID="createButton" runat="server" />
+    <asp:Button text="Update" onClick="toUpdate" ID="updateButton" runat="server" />
+    <asp:Button text="Delete" onClick="toDelete" ID="deleteButton" runat="server" />
+    <asp:Button text="Read" onClick="toRead" ID="readButton" runat="server"  />
+    <asp:Button text="Read First" onClick="toReadFirst" ID="firstButton" runat="server" />
+    <asp:Button text="Read Prev" onClick="toReadPrev" ID="previousButton" runat="server" />
+    <asp:Button text="Read Next" onClick="toReadNext" ID="nextButton" runat="server" />
     
 </asp:Content>
