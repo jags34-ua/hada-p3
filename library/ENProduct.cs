@@ -117,13 +117,15 @@ namespace library
         public bool Read()
         {
             CADProduct readProduct = new CADProduct();
-            bool confirm = readProduct.Read(this);
-            return confirm;
+            bool confirmation = readProduct.Read(this);
+            return confirmation;
         }
 
         public bool ReadFirst()
         {
-            return true;
+            CADProduct readFirstProduct = new CADProduct();
+            bool confirmation = readFirstProduct.ReadFirst(this);
+            return confirmation;
         }
 
         public bool ReadNext()

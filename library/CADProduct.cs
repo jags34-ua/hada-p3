@@ -160,7 +160,46 @@ namespace library
 
         public bool ReadFirst(ENProduct en)
         {
-            return true;
+            bool confirmation = false;
+            try
+            {
+                SqlConnection connect = null;
+                connect = new SqlConnection(constring);
+                connect.Open();
+                string query = "Select * FROM Products";
+                SqlCommand consulta = new SqlCommand(query, connect);
+                SqlDataReader dr = consulta.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    en.Code = dr["code"].ToString();
+                    en.Amount = int.Parse(dr["amount"].ToString());
+                    en.Price = float.Parse(dr["price"].ToString());
+                    en.CreationDate = DateTime.Parse(dr["creationDate"].ToString());
+                    en.Name = dr["name"].ToString();
+                    en.Category = int.Parse(dr["category"].ToString());
+
+                    confirmation = true;
+                }
+                else
+                {
+                    confirmation = false;
+                }
+
+                dr.Close();
+                connect.Close();
+            }
+            catch (SqlException e)
+            {
+                confirmation = false;
+                Console.WriteLine("Read first operation has failed.Error: {0}", e.Message);
+            }
+            catch (Exception ex)
+            {
+                confirmation = false;
+                Console.WriteLine("Read first operation has failed.Error: {0}", ex.Message);
+            }
+            return confirmation;
         }
 
         public bool ReadNext(ENProduct en)

@@ -222,9 +222,26 @@ namespace proWeb
                 }
             }
         }
+        // For this 3 methods we have to retrieve every product from the database and then show only the product that has to be shown.
+        // (according to the statement)
         protected void toReadFirst(object sender, EventArgs e)
         {
+            ENProduct readFirstProduct = new ENProduct();
+            if (readFirstProduct.ReadFirst())
+            {
+                codeProduct.Text = readFirstProduct.Code;
+                nameProduct.Text = readFirstProduct.Name;
+                amountProduct.Text = readFirstProduct.Amount.ToString();
+                categoryListProduct.SelectedIndex = readFirstProduct.Category - 1;
+                priceProduct.Text = readFirstProduct.Price.ToString();
+                cdateProduct.Text = readFirstProduct.CreationDate.ToString();
 
+                msgToShow.Text = "First product with code: " + readFirstProduct.Code + " correctly shown.";
+            }
+            else
+            {
+                msgToShow.Text = "No product could be shown because the database does not contain none.";
+            }
         }
         protected void toReadPrev(object sender, EventArgs e)
         {
