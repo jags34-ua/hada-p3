@@ -9,6 +9,7 @@ using System.Data.Common;
 using System.Data;
 using System.Configuration;
 using System.Collections;
+using System.Globalization;
 
 namespace library
 {
@@ -58,8 +59,8 @@ namespace library
                 SqlConnection connect = null;
                 connect = new SqlConnection(constring);
                 connect.Open();
-                // Hay que cambiar el query.
-                string query = "Insert INTO Products (id, name, code, amount, price, category, creationDate) VALUES ('" + en.Code + "', '" + en.Name + "', '" + en.Code + "', '" + en.Amount + "', '" + en.Price + "', '" + en.Category + "', '" + en.CreationDate + "')";
+                string query = "UPDATE Products SET name = '" + en.Name + "', code = '" + en.Code + "', amount = '" + en.Amount + "', price = '" + en.Price + "', category = '" + en.Category + "', creationDate = '" + en.CreationDate + "' WHERE code = '" + en.Code + "'";
+
                 SqlCommand consulta = new SqlCommand(query, connect);
                 consulta.ExecuteNonQuery();
                 confirmation = true;
@@ -80,7 +81,31 @@ namespace library
 
         public bool Delete(ENProduct en)
         {
-            return true;
+            bool confirmation = false;
+            try
+            {
+                SqlConnection connect = null;
+                connect = new SqlConnection(constring);
+                connect.Open();
+                string query = "DELETE FROM Products WHERE code = '" + en.Code + "'";
+
+
+                SqlCommand consulta = new SqlCommand(query, connect);
+                consulta.ExecuteNonQuery();
+                confirmation = true;
+                connect.Close();
+            }
+            catch (SqlException e)
+            {
+                confirmation = false;
+                Console.WriteLine("Delete operation has failed.Error: {0}", e.Message);
+            }
+            catch (Exception ex)
+            {
+                confirmation = false;
+                Console.WriteLine("Delete operation has failed.Error: {0}", ex.Message);
+            }
+            return confirmation;
         }
 
         public bool Read(ENProduct en)

@@ -75,11 +75,13 @@ namespace proWeb
                 ENProduct newProduct = new ENProduct();
                 newProduct.Code = codeProduct.Text;
                 newProduct.Name = nameProduct.Text;
-                Console.WriteLine(newProduct.Name);
                 newProduct.Price = float.Parse(priceProduct.Text);
                 newProduct.Amount = int.Parse(amountProduct.Text);
                 newProduct.Category = int.Parse(categoryListProduct.SelectedValue) + 1;
-                newProduct.CreationDate = DateTime.Parse(cdateProduct.Text);
+                //newProduct.CreationDate = DateTime.Parse(cdateProduct.Text);
+                newProduct.CreationDate = DateTime.ParseExact(cdateProduct.Text, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+
+
 
                 if (newProduct.Create())
                 {
@@ -146,12 +148,12 @@ namespace proWeb
                 newProduct.Name = nameProduct.Text;
                 newProduct.Price = float.Parse(priceProduct.Text);
                 newProduct.Amount = int.Parse(amountProduct.Text);
-                newProduct.Category = int.Parse(categoryListProduct.SelectedValue);
+                newProduct.Category = int.Parse(categoryListProduct.SelectedValue) + 1;
                 newProduct.CreationDate = DateTime.Parse(cdateProduct.Text);
 
                 if (newProduct.Update())
                 {
-                    msgToShow.Text = "Product with code: " + newProduct.Code + " and name: " + newProduct.Name + " was updated.";
+                    msgToShow.Text = "Product with code: " + newProduct.Code + " was updated.";
                 }
                 else
                 {
@@ -166,7 +168,30 @@ namespace proWeb
 
         protected void toDelete(object sender, EventArgs e)
         {
-
+            if (codeProduct.Text == "")
+            {
+                msgToShow.Text = "Insert a product code before trying to delete it.";
+            }
+            else
+            {
+                ENProduct deleteProduct = new ENProduct();
+                deleteProduct.Code = codeProduct.Text;
+                if (deleteProduct.Read())
+                {
+                    if (deleteProduct.Delete())
+                    {
+                        msgToShow.Text = "Product with code: " + deleteProduct.Code + " correctly deleted.";
+                    }
+                    else
+                    {
+                        msgToShow.Text = "Product with code: " + deleteProduct.Code + " could not be deleted.";
+                    }
+                }
+                else
+                {
+                    msgToShow.Text = "Product was not found in the data base.";
+                }
+            }
         }
 
 

@@ -108,7 +108,10 @@ namespace library
 
         public bool Delete()
         {
-            return true;
+            CADProduct deleteProduct = new CADProduct();
+            bool confirmation = false;
+            confirmation = deleteProduct.Delete(this);
+            return confirmation;
         }
 
         public bool Read()
