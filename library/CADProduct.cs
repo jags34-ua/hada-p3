@@ -30,7 +30,7 @@ namespace library
                 connect = new SqlConnection(constring);
                 connect.Open();
                 // Hay que cambiar el query?
-                string query = "Insert INTO Products (id, name, code, amount, price, category, creationDate) VALUES ('" + en.Code + "', '" + en.Name + "', '" + en.Code + "', '" + en.Amount + "', '" + en.Price + "', '" + en.Category + "', '" + en.CreationDate + "')";
+                string query = "Insert INTO Products (name, code, amount, price, category, creationDate) VALUES ('" + en.Name + "', '" + en.Code + "', '" + en.Amount + "', '" + en.Price + "', '" + en.Category + "', '" + en.CreationDate + "')";
                 SqlCommand consulta = new SqlCommand(query, connect);
                 consulta.ExecuteNonQuery();
                 confirmation = true;
@@ -39,6 +39,7 @@ namespace library
             catch(SqlException e)
             {
                 confirmation = false;
+                Console.WriteLine("La creación del producto falla.");
                 Console.WriteLine("Create operation has failed.Error: {0}", e.Message);
             }
             catch(Exception ex)
@@ -79,7 +80,7 @@ namespace library
 
         public bool Delete(ENProduct en)
         {
-
+            return true;
         }
 
         public bool Read(ENProduct en)
@@ -90,27 +91,31 @@ namespace library
                 SqlConnection connect = null;
                 connect = new SqlConnection(constring);
                 connect.Open();
-                // Hay que cambiar el query.
-                string query = "Insert INTO Products (id, name, code, amount, price, category, creationDate) VALUES ('" + en.Code + "', '" + en.Name + "', '" + en.Code + "', '" + en.Amount + "', '" + en.Price + "', '" + en.Category + "', '" + en.CreationDate + "')";
+                string query = "Select * FROM Products where code = '" + en.Code + "' ";
                 SqlCommand consulta = new SqlCommand(query, connect);
                 SqlDataReader dr = consulta.ExecuteReader();
-                dr.Read();
-                
-                if(dr["code"].ToString() == en.Code)
-                {
-                    en.Code = dr["code"].ToString();
-                    en.Amount = int.Parse(dr["amount"].ToString());
-                    en.Price = float.Parse(dr["price"].ToString());
-                    en.CreationDate = DateTime.Parse(dr["creationDate"].ToString());
-                    en.Name = dr["name"].ToString();
-                    en.Category = int.Parse(dr["category"].ToString());
 
-                    confirmation = true;
+                if (dr.Read())
+                {
+                    if (dr["code"].ToString() == en.Code)
+                    {
+                        en.Code = dr["code"].ToString();
+                        en.Amount = int.Parse(dr["amount"].ToString());
+                        en.Price = float.Parse(dr["price"].ToString());
+                        en.CreationDate = DateTime.Parse(dr["creationDate"].ToString());
+                        en.Name = dr["name"].ToString();
+                        en.Category = int.Parse(dr["category"].ToString());
+
+                        confirmation = true;
+                    }
+                    else
+                    {
+                        confirmation = false;
+                    }
                 }
                 else
                 {
-                    confirmation = false;
-                }
+                    confirmation = false;                }
 
                 dr.Close();
                 connect.Close();
@@ -130,17 +135,17 @@ namespace library
 
         public bool ReadFirst(ENProduct en)
         {
-
+            return true;
         }
 
         public bool ReadNext(ENProduct en)
         {
-
+            return true;
         }
 
         public bool ReadPrev(ENProduct en)
         {
-
+            return true;
         }
     }
 }

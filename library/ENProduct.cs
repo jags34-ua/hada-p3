@@ -108,7 +108,7 @@ namespace library
 
         public bool Delete()
         {
-
+            return true;
         }
 
         public bool Read()
@@ -120,17 +120,17 @@ namespace library
 
         public bool ReadFirst()
         {
-
+            return true;
         }
 
         public bool ReadNext()
         {
-
+            return true;
         }
 
         public bool ReadPrev()
         {
-
+            return true;
         }
     }
 }
