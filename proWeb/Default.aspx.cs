@@ -243,14 +243,38 @@ namespace proWeb
                 msgToShow.Text = "No product could be shown because the database does not contain none.";
             }
         }
+  
+        protected void toReadNext(object sender, EventArgs e)
+        {
+            if (codeProduct.Text != "")
+            {
+                ENProduct readNextProduct = new ENProduct();
+                readNextProduct.Code = codeProduct.Text;
+                if (readNextProduct.ReadNext())
+                {
+                    codeProduct.Text = readNextProduct.Code;
+                    nameProduct.Text = readNextProduct.Name;
+                    amountProduct.Text = readNextProduct.Amount.ToString();
+                    categoryListProduct.SelectedIndex = readNextProduct.Category - 1;
+                    priceProduct.Text = readNextProduct.Price.ToString();
+                    cdateProduct.Text = readNextProduct.CreationDate.ToString();
+
+                    msgToShow.Text = "Next product with code: " + readNextProduct.Code + " correctly shown.";
+                }
+                else
+                {
+                    msgToShow.Text = "There are not more products to show.";
+                }
+            }
+            else
+            {
+                msgToShow.Text = "Insert a product before trying to get its next.";
+            }
+        }
+
         protected void toReadPrev(object sender, EventArgs e)
         {
 
         }
-        protected void toReadNext(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

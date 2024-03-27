@@ -130,7 +130,11 @@ namespace library
 
         public bool ReadNext()
         {
-            return true;
+            CADProduct readNextProduct = new CADProduct();
+            bool confirmation = false;
+            if (readNextProduct.Read(this))
+                confirmation = readNextProduct.ReadNext(this);
+            return confirmation;
         }
 
         public bool ReadPrev()
