@@ -8,8 +8,8 @@ namespace library
 {
     public class ENCategory
     {
-        public int _id;
-        public string _name;
+        private int _id;
+        private string _name;
 
         public int Id
         {

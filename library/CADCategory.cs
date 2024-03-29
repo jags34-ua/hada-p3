@@ -30,7 +30,7 @@ namespace library
                 SqlConnection connect = null;
                 connect = new SqlConnection(constring);
                 connect.Open();
-                string query = "Select * FROM Products where code = '" + en.Id + "' ";
+                string query = "Select * FROM Category where code = '" + en.Id + "' ";
                 SqlCommand consulta = new SqlCommand(query, connect);
                 SqlDataReader dr = consulta.ExecuteReader();
 

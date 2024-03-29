@@ -30,8 +30,8 @@ namespace library
                 SqlConnection connect = null;
                 connect = new SqlConnection(constring);
                 connect.Open();
-                string formattedDateTime = en.CreationDate.ToString("yyyy-MM-dd HH:mm:ss"); //Comprobar corrección de nuevo
-                string query = "Insert INTO Products (name, code, amount, price, category, creationDate) VALUES ('" + en.Name + "', '" + en.Code + "', '" + en.Amount + "', '" + en.Price + "', '" + en.Category + "', '" + en.CreationDate + "')";
+                string formattedDateTime = en.CreationDate.ToString("yyyy-MM-dd HH:mm:ss");
+                string query = "Insert INTO Products (name, code, amount, price, category, creationDate) VALUES ('" + en.Name + "', '" + en.Code + "', '" + en.Amount + "', '" + en.Price + "', '" + en.Category + "', '" + formattedDateTime + "')";
                 SqlCommand consulta = new SqlCommand(query, connect);
                 consulta.ExecuteNonQuery();
                 confirmation = true;
