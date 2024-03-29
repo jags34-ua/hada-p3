@@ -15,7 +15,7 @@ namespace proWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             msgToShow.Text = "Welcome to the Products Management main page.";
-            // Aquí hay que añadir lo que pone en la última diapositiva.
+            LoadCategories();
         }
 
         protected void toCreate(object sender, EventArgs e)
@@ -298,6 +298,16 @@ namespace proWeb
             {
                 msgToShow.Text = "Insert a product before trying to get its previous.";
             }
+        }
+        private void LoadCategories()
+        {
+            CADCategory cadCategory = new CADCategory();
+            List<ENCategory> categories = cadCategory.ReadAll();
+
+            categoryListProduct.DataSource = categories;
+            categoryListProduct.DataTextField = "Name"; 
+            categoryListProduct.DataValueField = "Id"; 
+            categoryListProduct.DataBind();
         }
     }
 }
