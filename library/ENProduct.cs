@@ -139,7 +139,14 @@ namespace library
 
         public bool ReadPrev()
         {
-            return true;
+            ENProduct pivote = new ENProduct(this.Code,this.Name,this.Amount,this.Price,this.CreationDate);
+            CADProduct readPrevProduct = new CADProduct();
+            bool confirmation = false;
+            if(readPrevProduct.ReadFirst(pivote) && this.Code != pivote.Code)
+            {
+                confirmation = readPrevProduct.ReadPrev(this);
+            }
+            return confirmation;
         }
     }
 }

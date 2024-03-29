@@ -274,7 +274,30 @@ namespace proWeb
 
         protected void toReadPrev(object sender, EventArgs e)
         {
+            if (codeProduct.Text != "")
+            {
+                ENProduct readPrevProduct = new ENProduct();
+                readPrevProduct.Code = codeProduct.Text;
+                if (readPrevProduct.ReadPrev())
+                {
+                    codeProduct.Text = readPrevProduct.Code;
+                    nameProduct.Text = readPrevProduct.Name;
+                    amountProduct.Text = readPrevProduct.Amount.ToString();
+                    categoryListProduct.SelectedIndex = readPrevProduct.Category - 1;
+                    priceProduct.Text = readPrevProduct.Price.ToString();
+                    cdateProduct.Text = readPrevProduct.CreationDate.ToString();
 
+                    msgToShow.Text = "Previous product with code: " + readPrevProduct.Code + " correctly shown.";
+                }
+                else
+                {
+                    msgToShow.Text = "There are not more previous products to show.";
+                }
+            }
+            else
+            {
+                msgToShow.Text = "Insert a product before trying to get its previous.";
+            }
         }
     }
 }

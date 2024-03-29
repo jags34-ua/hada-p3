@@ -251,7 +251,62 @@ namespace library
 
         public bool ReadPrev(ENProduct en)
         {
-            return true;
+            bool confirmation = false;
+            try
+            {
+                SqlConnection connect = null;
+                connect = new SqlConnection(constring);
+                connect.Open();
+                string query = "Select * FROM Products";
+                SqlCommand consulta = new SqlCommand(query, connect);
+                SqlDataReader dr = consulta.ExecuteReader();
+
+                dr.Read();
+                ENProduct pivote = new ENProduct();
+                pivote.Code = dr["code"].ToString();
+                pivote.Amount = int.Parse(dr["amount"].ToString());
+                pivote.Price = float.Parse(dr["price"].ToString());
+                pivote.CreationDate = DateTime.Parse(dr["creationDate"].ToString());
+                pivote.Name = dr["name"].ToString();
+                pivote.Category = int.Parse(dr["category"].ToString());
+
+                while (dr.Read() && !confirmation)
+                {
+                    if (dr["code"].ToString() == en.Code)
+                    {
+                        confirmation = true;
+                        break;
+                    }
+
+                    pivote.Code = dr["code"].ToString();
+                    pivote.Amount = int.Parse(dr["amount"].ToString());
+                    pivote.Price = float.Parse(dr["price"].ToString());
+                    pivote.CreationDate = DateTime.Parse(dr["creationDate"].ToString());
+                    pivote.Name = dr["name"].ToString();
+                    pivote.Category = int.Parse(dr["category"].ToString());
+                }
+
+                en.Code = pivote.Code;
+                en.Name = pivote.Name;
+                en.Amount = pivote.Amount;
+                en.Category = pivote.Category;
+                en.CreationDate = pivote.CreationDate;
+                en.Price = pivote.Price;
+
+                dr.Close();
+                connect.Close();
+            }
+            catch (SqlException e)
+            {
+                confirmation = false;
+                Console.WriteLine("Read next operation has failed.Error: {0}", e.Message);
+            }
+            catch (Exception ex)
+            {
+                confirmation = false;
+                Console.WriteLine("Read next operation has failed.Error: {0}", ex.Message);
+            }
+            return confirmation;
         }
     }
 }
