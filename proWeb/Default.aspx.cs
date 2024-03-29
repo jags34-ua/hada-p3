@@ -64,20 +64,13 @@ namespace proWeb
                     msgToShow.Text = "Invalid creation date format. Please use dd/mm/yyyy hh:mm:ss.";
                     return;
                 }
-                // Verificar si se seleccionó una categoría válida.
-                int category;
-                if (!int.TryParse(categoryListProduct.SelectedValue, out category) || category < 0 || category > 3)
-                {
-                    msgToShow.Text = "Please select a valid category.";
-                    return;
-                }
                 // Si todas las restricciones se cumplen, entonces los datos son válidos.
                 ENProduct newProduct = new ENProduct();
                 newProduct.Code = codeProduct.Text;
                 newProduct.Name = nameProduct.Text;
                 newProduct.Price = float.Parse(priceProduct.Text);
                 newProduct.Amount = int.Parse(amountProduct.Text);
-                newProduct.Category = int.Parse(categoryListProduct.SelectedValue) + 1;
+                int categoryValue = int.Parse(categoryListProduct.SelectedValue);
                 //newProduct.CreationDate = DateTime.Parse(cdateProduct.Text);
                 newProduct.CreationDate = DateTime.ParseExact(cdateProduct.Text, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
@@ -148,7 +141,7 @@ namespace proWeb
                 newProduct.Name = nameProduct.Text;
                 newProduct.Price = float.Parse(priceProduct.Text);
                 newProduct.Amount = int.Parse(amountProduct.Text);
-                newProduct.Category = int.Parse(categoryListProduct.SelectedValue) + 1;
+                int categoryValue = int.Parse(categoryListProduct.SelectedValue);
                 newProduct.CreationDate = DateTime.Parse(cdateProduct.Text);
 
                 if (newProduct.Update())
@@ -210,7 +203,7 @@ namespace proWeb
                     codeProduct.Text = readProduct.Code;
                     nameProduct.Text = readProduct.Name;
                     amountProduct.Text = readProduct.Amount.ToString();
-                    categoryListProduct.SelectedIndex = readProduct.Category - 1;
+                    int categoryValue = int.Parse(categoryListProduct.SelectedValue);
                     priceProduct.Text = readProduct.Price.ToString();
                     cdateProduct.Text = readProduct.CreationDate.ToString();
 
@@ -232,7 +225,7 @@ namespace proWeb
                 codeProduct.Text = readFirstProduct.Code;
                 nameProduct.Text = readFirstProduct.Name;
                 amountProduct.Text = readFirstProduct.Amount.ToString();
-                categoryListProduct.SelectedIndex = readFirstProduct.Category - 1;
+                int categoryValue = int.Parse(categoryListProduct.SelectedValue);
                 priceProduct.Text = readFirstProduct.Price.ToString();
                 cdateProduct.Text = readFirstProduct.CreationDate.ToString();
 
@@ -255,7 +248,7 @@ namespace proWeb
                     codeProduct.Text = readNextProduct.Code;
                     nameProduct.Text = readNextProduct.Name;
                     amountProduct.Text = readNextProduct.Amount.ToString();
-                    categoryListProduct.SelectedIndex = readNextProduct.Category - 1;
+                    int categoryValue = int.Parse(categoryListProduct.SelectedValue);
                     priceProduct.Text = readNextProduct.Price.ToString();
                     cdateProduct.Text = readNextProduct.CreationDate.ToString();
 
@@ -283,7 +276,7 @@ namespace proWeb
                     codeProduct.Text = readPrevProduct.Code;
                     nameProduct.Text = readPrevProduct.Name;
                     amountProduct.Text = readPrevProduct.Amount.ToString();
-                    categoryListProduct.SelectedIndex = readPrevProduct.Category - 1;
+                    int categoryValue = int.Parse(categoryListProduct.SelectedValue);
                     priceProduct.Text = readPrevProduct.Price.ToString();
                     cdateProduct.Text = readPrevProduct.CreationDate.ToString();
 
@@ -304,10 +297,12 @@ namespace proWeb
             CADCategory cadCategory = new CADCategory();
             List<ENCategory> categories = cadCategory.ReadAll();
 
-            categoryListProduct.DataSource = categories;
-            categoryListProduct.DataTextField = "Name"; 
-            categoryListProduct.DataValueField = "Id"; 
-            categoryListProduct.DataBind();
+            // Agregar las categorías cargadas desde la base de datos al DropDownList
+            foreach (ENCategory category in categories)
+            {
+                categoryListProduct.Items.Add(new ListItem(category.Name, category.Id.ToString()));
+            }
         }
+
     }
 }
